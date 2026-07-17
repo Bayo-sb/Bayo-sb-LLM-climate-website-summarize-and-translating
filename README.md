@@ -1,7 +1,7 @@
 # IPCC Report Summarizer & Nigerian Language Translator
 
 Makes IPCC climate report content accessible to non-technical readers by
-generating a plain-language English summary, plus Yoruba and Hausa
+generating a plain-language English summary, plus Yoruba, Hausa, and Igbo
 translations of that summary, using Claude.
 
 Available two ways: a command-line script and a Gradio web app, both running
@@ -23,12 +23,13 @@ and especially for communities who don't read English as a first
 language, that's a real access barrier to understanding climate risks
 that affect them directly. Nigeria, for example, faces significant
 climate exposure — flooding, shifting rainfall patterns, and coastal
-risk — but Yoruba and Hausa speakers without strong English fluency have
-limited direct access to what the IPCC's own findings say about it.
+risk — but Yoruba, Hausa, and Igbo speakers without strong English
+fluency have limited direct access to what the IPCC's own findings say
+about it.
 
 This project is a small step toward closing that gap: taking real IPCC
-report content and making it readable in plain language, in two of
-Nigeria's major languages.
+report content and making it readable in plain language, in Nigeria's
+three most widely spoken languages.
 
 ## What this actually does
 
@@ -37,7 +38,7 @@ range, and it will:
 
 1. Extract the text from those pages
 2. Ask Claude to produce a plain-language, jargon-free summary in English
-3. Ask Claude to translate that summary into Yoruba and Hausa
+3. Ask Claude to translate that summary into Yoruba, Hausa, and Igbo
 4. List any technical terms that were simplified or dropped, so a reader who
    wants more detail knows what to look up
 
@@ -47,11 +48,11 @@ Being upfront about current limitations rather than overstating scope:
 
 - **No OCR.** If the PDF is scanned/image-based rather than text-based, this
   will fail with a clear error rather than silently returning nothing.
-- **No native-speaker validation.** The Yoruba and Hausa outputs are machine
-  translations from Claude. They have not been reviewed by a native speaker
-  for accuracy, tone, or regional dialect appropriateness. Treat this as a
-  first draft, not a final community-facing document, until that review
-  happens.
+- **No native-speaker validation.** The Yoruba, Hausa, and Igbo outputs are
+  machine translations from Claude. They have not been reviewed by native
+  speakers for accuracy, tone, or regional dialect appropriateness. Treat
+  this as a first draft, not a final community-facing document, until that
+  review happens.
 - **Single-excerpt at a time.** It doesn't yet process a whole multi-hundred
   page report automatically — you choose a page range per run. Chunking a
   full report into sections is on the roadmap below.
@@ -70,6 +71,10 @@ pip install -r requirements.txt
 cp .env.example .env
 # edit .env and add your own ANTHROPIC_API_KEY
 ```
+
+Report PDFs are not included in this repo. Download any real IPCC report
+(e.g. the AR6 Synthesis Report Summary for Policymakers) directly from
+**ipcc.ch** to test with.
 
 ## Usage
 
@@ -102,14 +107,14 @@ upload-and-view interface instead of flags and a terminal.
   scanned reports
 - Automatically chunk and summarize a full report section by section instead
   of a manual page range
-- Get at least one native Yoruba and one native Hausa speaker to review
-  output before treating it as deployable to a real community organization
+- Get native Yoruba, Hausa, and Igbo speakers to review output before
+  treating it as deployable to a real community organization
 - Add basic tests around PDF extraction edge cases (empty pages, mixed
   languages, non-Latin scripts in source PDFs)
 
 ## History
 
 An earlier version of this project summarized only the IPCC homepage using
-the OpenAI API. This version reads actual report content from PDFs and uses
-Claude instead, and adds a web app on top of the original command-line
-script.
+the OpenAI API. This version reads actual report content from PDFs, uses
+Claude instead, adds a web app on top of the original command-line script,
+and expanded translation coverage from two languages to three.
