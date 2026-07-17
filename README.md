@@ -7,6 +7,29 @@ translations of that summary, using Claude.
 Available two ways: a command-line script and a Gradio web app, both running
 the same underlying pipeline.
 
+## Background: what is the IPCC, and why does this matter
+
+The **Intergovernmental Panel on Climate Change (IPCC)** is the United
+Nations body responsible for assessing the science of climate change. It
+doesn't run its own experiments — instead, it reviews and synthesizes
+thousands of existing peer-reviewed studies into periodic assessment
+reports that inform government policy worldwide, including national
+climate commitments and adaptation planning.
+
+The problem this project addresses: IPCC reports are long, dense, and
+written for policymakers and scientists — a Summary for Policymakers alone
+can run dozens of pages of technical language. For the general public,
+and especially for communities who don't read English as a first
+language, that's a real access barrier to understanding climate risks
+that affect them directly. Nigeria, for example, faces significant
+climate exposure — flooding, shifting rainfall patterns, and coastal
+risk — but Yoruba and Hausa speakers without strong English fluency have
+limited direct access to what the IPCC's own findings say about it.
+
+This project is a small step toward closing that gap: taking real IPCC
+report content and making it readable in plain language, in two of
+Nigeria's major languages.
+
 ## What this actually does
 
 Give it a real IPCC report PDF (e.g. a Summary for Policymakers) and a page
