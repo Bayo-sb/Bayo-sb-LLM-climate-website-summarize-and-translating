@@ -1,10 +1,11 @@
 """
-IPCC Report Summarizer & Translator (Yoruba / Hausa)
+IPCC Report Summarizer & Translator (Yoruba / Hausa / Igbo)
 -----------------------------------------------------
 Takes an actual IPCC report PDF (e.g. a Summary for Policymakers) and produces:
   1. A plain-language English summary for a non-technical, general adult reader
   2. A Yoruba translation of that summary
   3. A Hausa translation of that summary
+  4. An Igbo translation of that summary
 
 This replaces an earlier version of this project that only summarized the
 IPCC homepage. This version reads real report content directly from a PDF.
@@ -64,7 +65,7 @@ def extract_pdf_text(pdf_path: str, page_range: str | None = None) -> str:
 
 def generate_summary(client: Anthropic, report_excerpt: str) -> dict:
     """Call Claude to produce an English plain-language summary plus
-    Yoruba and Hausa translations of that same summary."""
+    Yoruba, Hausa, and Igbo translations of that same summary."""
 
     prompt = f"""You are helping a community organization make an IPCC climate
 report excerpt accessible to non-technical residents who are not scientists.
@@ -76,6 +77,7 @@ no preamble) with exactly these keys:
   general adult reader with no science background
 - "yoruba": a Yoruba translation of that same plain-language summary
 - "hausa": a Hausa translation of that same plain-language summary
+- "igbo": an Igbo translation of that same plain-language summary
 - "key_terms": a short list (3-5 items) of any technical terms from the
   excerpt that were simplified or omitted, so a reader can look them up if
   they want more detail
@@ -119,6 +121,12 @@ def format_output(result: dict, source_file: str) -> str:
 ## Hausa Summary
 
 {result.get('hausa', '')}
+
+---
+
+## Igbo Summary
+
+{result.get('igbo', '')}
 
 ---
 
