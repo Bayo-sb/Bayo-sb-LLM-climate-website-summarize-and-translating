@@ -4,6 +4,9 @@ Makes IPCC climate report content accessible to non-technical readers by
 generating a plain-language English summary, plus Yoruba and Hausa
 translations of that summary, using Claude.
 
+Available two ways: a command-line script and a Gradio web app, both running
+the same underlying pipeline.
+
 ## What this actually does
 
 Give it a real IPCC report PDF (e.g. a Summary for Policymakers) and a page
@@ -14,8 +17,6 @@ range, and it will:
 3. Ask Claude to translate that summary into Yoruba and Hausa
 4. List any technical terms that were simplified or dropped, so a reader who
    wants more detail knows what to look up
-
-Output is a clean Markdown file with all three summaries side by side.
 
 ## What this does NOT do (yet)
 
@@ -31,14 +32,15 @@ Being upfront about current limitations rather than overstating scope:
 - **Single-excerpt at a time.** It doesn't yet process a whole multi-hundred
   page report automatically — you choose a page range per run. Chunking a
   full report into sections is on the roadmap below.
-- **No web interface yet.** This is a command-line tool. A simple web UI is
-  possible but not built.
+- **Not deployed publicly yet.** The web app (`app.py`) runs locally. It's
+  built to be deployable to a free host like Hugging Face Spaces, but that
+  deployment step hasn't happened yet.
 
 ## Setup
 
 ```bash
-git clone https://github.com/Bayo-sb/<repo-name>.git
-cd <repo-name>
+git clone https://github.com/Bayo-sb/Bayo-sb-LLM-climate-website-summarize-and-translating.git
+cd Bayo-sb-LLM-climate-website-summarize-and-translating
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
@@ -48,23 +50,37 @@ cp .env.example .env
 
 ## Usage
 
+### Command line
+
 ```bash
-# Summarize the first 5 pages of a report, print to terminal
+# Summarize pages 1-5 of a report, print to terminal
 python summarize_report.py path/to/report.pdf --pages 1-5
 
 # Save output to a file instead
 python summarize_report.py path/to/report.pdf --pages 1-5 --out summary.md
 ```
 
+### Web app (local)
+
+```bash
+python app.py
+```
+
+This starts a local Gradio interface (URL printed in the terminal, typically
+`http://127.0.0.1:7860`). Upload a PDF, set a page range, and click
+"Generate summary" — same underlying pipeline as the CLI, with a simple
+upload-and-view interface instead of flags and a terminal.
+
 ## Roadmap / what I'd do differently or next
 
+- Deploy the web app to a free host (Hugging Face Spaces) so it's usable
+  without cloning the repo
 - Add OCR fallback (e.g. via a vision-capable Claude call on page images) for
   scanned reports
 - Automatically chunk and summarize a full report section by section instead
   of a manual page range
 - Get at least one native Yoruba and one native Hausa speaker to review
   output before treating it as deployable to a real community organization
-- Add a minimal web interface so non-technical users aren't running a CLI
 - Add basic tests around PDF extraction edge cases (empty pages, mixed
   languages, non-Latin scripts in source PDFs)
 
@@ -72,4 +88,5 @@ python summarize_report.py path/to/report.pdf --pages 1-5 --out summary.md
 
 An earlier version of this project summarized only the IPCC homepage using
 the OpenAI API. This version reads actual report content from PDFs and uses
-Claude instead.
+Claude instead, and adds a web app on top of the original command-line
+script.
